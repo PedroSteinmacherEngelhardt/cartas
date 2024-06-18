@@ -7,36 +7,29 @@ const table = document.getElementById("table");
 
 table.onmouseup = () => {
     if (dragging) {
-        console.log(hand.children)
-        console.log(cards[dragging])
         hand.removeChild(cards[dragging].movement)
         table.appendChild(cards[dragging].movement)
-        cards.splice(dragging, 1)
+        pile[dragging] = cards[dragging].clone()
+        delete cards[dragging]
         hand.style.width = `${(cards.length - 1) * 300}px`
     }
 }
 
-let dragging = 0;
+let dragging = null;
 
-let cards = [0]
+let cards = {}
+let pile = {}
 
-for (let index = 1; index <= 4; index++) {
-    let containerDiv = document.createElement('div');
-    containerDiv.className = 'container';
+for (let index = 1; index <= 6; index++) {
+    let uuid = crypto.randomUUID();
 
-    let cardDiv = document.createElement('div');
-    cardDiv.className = 'card';
-
-    containerDiv.appendChild(cardDiv);
-    hand.appendChild(containerDiv);
-
-    let card = new Card(containerDiv, cardDiv);
-
-    containerDiv.onmousedown = () => {
-        dragging = index;
+    let callback = () => {
+        dragging = uuid;
     }
 
-    cards.push(card);
+    let card = new Card(hand, callback);
+
+    cards[uuid] = card;
 }
 
 hand.style.width = `${(cards.length - 1) * 300}px`
@@ -48,8 +41,7 @@ window.addEventListener("mouseup", function (e) {
 }, false);
 
 function handleMouseMove(event) {
-    let [offsetX, offsetY] = [hand.getBoundingClientRect().x, hand.getBoundingClientRect().y];
     if (event.buttons == 1 && dragging) {
-        cards[dragging].move(event.clientX, event.clientY, offsetX, offsetY, dragging - 1);
+        cards[dragging].move(event.clientX, event.clientY);
     }
 }

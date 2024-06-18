@@ -1,19 +1,33 @@
 export class Card {
-    constructor(movement, rotation) {
-        this.movement = movement;
-        this.rotation = rotation;
+    constructor(parent, callback) {
+        let containerDiv = document.createElement('div');
+        containerDiv.className = 'container';
 
+        let cardDiv = document.createElement('div');
+        cardDiv.className = 'card';
+
+        containerDiv.appendChild(cardDiv);
+        parent.appendChild(containerDiv);
+
+        containerDiv.onmousedown = callback;
+
+        this.movement = containerDiv;
+        this.rotation = cardDiv;
     }
 
     x = 0
     y = 0
     timer
 
-
-    move(mouseX, mouseY, offsetX, offsetY, index) {
+    move(mouseX, mouseY) {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => this.mouse_stopped(), 100);
 
+        let parent = this.movement.parentNode
+
+        let [offsetX, offsetY] = [parent.getBoundingClientRect().x, parent.getBoundingClientRect().y];
+
+        let index = Array.from(parent.children).indexOf(this.movement);
         let cardXoffset = 150 + (index * 300)
 
         this.movement.style.transform = `translate(${mouseX - offsetX - cardXoffset}px,${mouseY - offsetY - 200}px)`;
