@@ -11,7 +11,6 @@ table.onmouseup = () => {
         table.appendChild(cards[dragging].movement)
         pile[dragging] = cards[dragging].clone()
         delete cards[dragging]
-        hand.style.width = `${(cards.length - 1) * 300}px`
     }
 }
 
@@ -32,11 +31,9 @@ for (let index = 1; index <= 6; index++) {
     cards[uuid] = card;
 }
 
-hand.style.width = `${(cards.length - 1) * 300}px`
-
 window.addEventListener("mouseup", function (e) {
     if (!dragging) return;
-    cards[dragging].movement.style.transform = `translate(0%,0%)`;
+    cards[dragging].reset_position();
     dragging = 0;
 }, false);
 
