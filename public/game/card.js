@@ -7,13 +7,12 @@ export class Card {
         cardDiv.className = 'card';
 
         cardDiv.onmouseenter = () => {
-            this.rotation.style.height = `500px`;
-            this.rotation.style.width = `375px`;
+            this.card.style.height = `500px`;
+            this.card.style.width = `375px`;
         }
         cardDiv.onmouseleave = () => {
-            console.log('leave')
-            this.rotation.style.height = `400px`;
-            this.rotation.style.width = `300px`;
+            this.card.style.height = `400px`;
+            this.card.style.width = `300px`;
         }
 
         containerDiv.appendChild(cardDiv);
@@ -21,8 +20,8 @@ export class Card {
 
         containerDiv.onmousedown = callback;
 
-        this.movement = containerDiv;
-        this.rotation = cardDiv;
+        this.container = containerDiv;
+        this.card = cardDiv;
     }
 
     x = 0
@@ -33,18 +32,18 @@ export class Card {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => this.mouse_stopped(), 100);
 
-        let parent = this.movement.parentNode;
+        let parent = this.container.parentNode;
 
         const width = window.innerWidth;
         const height = window.innerHeight;
 
         let [offsetX, offsetY] = [parent.getBoundingClientRect().x, parent.getBoundingClientRect().y];
-        let [cardX, cardY] = [this.rotation.getBoundingClientRect().x - width / 2, this.rotation.getBoundingClientRect().y - height / 2];
+        let [cardX, cardY] = [this.card.getBoundingClientRect().x - width / 2, this.card.getBoundingClientRect().y - height / 2];
 
-        let index = Array.from(parent.children).indexOf(this.movement);
+        let index = Array.from(parent.children).indexOf(this.container);
         let cardXoffset = 150 + (index * 300)
 
-        this.movement.style.transform = `translate(${mouseX - offsetX - cardXoffset}px,${mouseY - offsetY - 250}px)`;
+        this.container.style.transform = `translate(${mouseX - offsetX - cardXoffset}px,${mouseY - offsetY - 250}px)`;
 
         let deltaX = this.x - mouseX;
         let deltaY = this.y - mouseY;
@@ -61,26 +60,26 @@ export class Card {
         let shadowX = (cardX / (width / 2)) * -150
         let shadowY = (cardY / (height / 2)) * -150
 
-        this.rotation.style.boxShadow = `${shadowX}px ${shadowY}px 21px 0px rgba(0, 0, 0, 0.45)`;
-        this.rotation.style.transform = `rotateY(${degY * directionX}deg) rotateX(${degX * -directionY}deg) rotateZ(${15 * -directionX}deg)`;
+        this.card.style.boxShadow = `${shadowX}px ${shadowY}px 21px 0px rgba(0, 0, 0, 0.45)`;
+        this.card.style.transform = `rotateY(${degY * directionX}deg) rotateX(${degX * -directionY}deg) rotateZ(${15 * -directionX}deg)`;
 
-        this.rotation.style.height = `500px`;
-        this.rotation.style.width = `375px`;
+        this.card.style.height = `500px`;
+        this.card.style.width = `375px`;
 
         this.x = mouseX;
         this.y = mouseY;
     }
 
     mouse_stopped() {
-        this.rotation.style.transform = `rotateY(${0}deg) rotateX(${0}deg)`;
+        this.card.style.transform = `rotateY(${0}deg) rotateX(${0}deg)`;
         [this.x, this.y] = [0, 0];
     }
 
     reset_position() {
-        this.movement.style.transform = `translate(0%,0%)`;
-        this.rotation.style.boxShadow = `${0}px ${0}px 0px 0px rgba(0, 0, 0, 0.45)`;
-        this.rotation.style.height = `400px`;
-        this.rotation.style.width = `300px`;
+        this.container.style.transform = `translate(0%,0%)`;
+        this.card.style.boxShadow = `${0}px ${0}px 0px 0px rgba(0, 0, 0, 0.45)`;
+        this.card.style.height = `400px`;
+        this.card.style.width = `300px`;
 
     }
 

@@ -6,6 +6,10 @@
     user-select: none;
 }
 
+.heading {
+    color: red;
+}
+
 .table {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -32,7 +36,6 @@
 
 .container {
     position: relative;
-    transform: translate(-50%, -50%);
     transform-style: preserve-3d;
     perspective: 1000px;
     transform-origin: 0% 0%;
@@ -44,7 +47,6 @@
     width: 300px;
     background-color: black;
     border-radius: 10px;
-    transform: translate(50%, 50%);
     background-image: url("Ace_of_spades.svg.png");
     background-size: contain;
     background-repeat: no-repeat;

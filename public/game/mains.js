@@ -1,4 +1,10 @@
-import { Card } from "./card.js";
+import { Card } from "./card";
+
+// fetch('/get-heading')
+//     .then(response => response.text())
+//     .then(data => {
+//         document.getElementById('headingContainer').innerHTML = data;
+//     });
 
 document.onmousemove = handleMouseMove;
 
@@ -7,10 +13,8 @@ const table = document.getElementById("table");
 
 table.onmouseup = () => {
     if (dragging) {
-        hand.removeChild(cards[dragging].movement)
-        table.appendChild(cards[dragging].movement)
-        pile[dragging] = cards[dragging].clone()
-        delete cards[dragging]
+        hand.removeChild(cards[dragging].container)
+        table.appendChild(cards[dragging].container)
     }
 }
 
